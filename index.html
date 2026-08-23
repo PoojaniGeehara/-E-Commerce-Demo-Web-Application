@@ -28,3 +28,122 @@
       </nav>
     </div>
   </header>
+  <main>
+
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1>Shop Smart. Live Better.</h1>
+          <p>Discover quality products at affordable prices.</p>
+          <a href="pages/products.html" class="btn btn-primary">Shop Now</a>
+        </div>
+        <div class="hero-image">
+          <img src="images/hero.jpg" alt="ShopEase featured products" onerror="this.parentElement.style.background='rgba(255,255,255,0.12)'; this.parentElement.style.minHeight='280px'; this.remove();">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="container">
+        <h2 class="section-title">Shop by Category</h2>
+        <p class="section-subtitle">Browse our most popular departments.</p>
+        <div class="category-grid" id="category-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--color-bg-subtle);">
+      <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <p class="section-subtitle">Hand-picked items our customers love.</p>
+        <div class="product-grid" id="featured-products"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="promo-banner">
+          <div>
+            <h2>End of Season Sale</h2>
+            <p class="text-muted">Save up to 25% on selected Electronics and Shoes. Limited time only.</p>
+          </div>
+          <a href="pages/products.html" class="btn btn-primary">Shop the Sale</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Why Shop With Us</h2>
+        <p class="section-subtitle">Reasons customers keep coming back to ShopEase.</p>
+        <div class="feature-grid">
+          <div class="feature-card card">
+            <div class="feature-icon">🚚</div>
+            <h3>Fast Delivery</h3>
+            <p class="text-muted">Island-wide delivery in 3-5 business days.</p>
+          </div>
+          <div class="feature-card card">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure Checkout</h3>
+            <p class="text-muted">Your information stays protected at every step.</p>
+          </div>
+          <div class="feature-card card">
+            <div class="feature-icon">↩️</div>
+            <h3>Easy Returns</h3>
+            <p class="text-muted">Simple 7-day return policy on eligible items.</p>
+          </div>
+          <div class="feature-card card">
+            <div class="feature-icon">💬</div>
+            <h3>Friendly Support</h3>
+            <p class="text-muted">Our team is on hand to help with any question.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="navbar-logo" style="color:#fff;"><span class="logo-mark">SE</span>ShopEase</a>
+          <p>Shop Smart. Live Better. A demo storefront built for Software Quality Assurance testing practice.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="pages/products.html">All Products</a></li>
+            <li><a href="index.html#categories">Categories</a></li>
+            <li><a href="pages/cart.html">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <ul>
+            <li><a href="pages/login.html">Login</a></li>
+            <li><a href="pages/register.html">Register</a></li>
+            <li><a href="pages/profile.html">Profile</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; <span data-current-year></span> ShopEase. Demo application for SQA testing purposes only.
+      </div>
+    </div>
+  </footer>
+
+  <script src="data/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>
+
