@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - ShopEase</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body data-page="register">
+
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-logo"><span class="logo-mark">SE</span>ShopEase</a>
+      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar-links">
+        <a href="../index.html" data-page="home">Home</a>
+        <a href="products.html" data-page="products">Products</a>
+        <a href="../index.html#categories" data-page="categories">Categories</a>
+        <a href="cart.html" data-page="cart" data-cart-count>Cart (0)</a>
+        <a href="login.html" data-nav="guest-only" data-page="login" class="btn btn-secondary">Login</a>
+        <a href="profile.html" data-nav="auth-only" data-page="profile" style="display:none;">Profile</a>
+        <a href="#" data-nav="auth-only" data-action="logout" style="display:none;">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="auth-wrapper">
+      <div class="auth-card card">
+        <h1>Create your account</h1>
+        <p class="auth-subtitle">Join ShopEase to save your details for faster checkout.</p>
+
+        <div class="alert" id="register-alert"></div>
+
+        <form id="register-form" novalidate>
+          <div class="form-group">
+            <label for="register-name">Full Name</label>
+            <input type="text" id="register-name" name="fullName" autocomplete="name">
+            <span class="field-error" id="register-name-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="register-email">Email</label>
+            <input type="email" id="register-email" name="email" autocomplete="email">
+            <span class="field-error" id="register-email-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="register-phone">Phone Number</label>
+            <input type="tel" id="register-phone" name="phone" autocomplete="tel" placeholder="0771234567">
+            <span class="field-error" id="register-phone-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="register-password">Password</label>
+            <input type="password" id="register-password" name="password" autocomplete="new-password">
+            <span class="field-error" id="register-password-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="register-confirm-password">Confirm Password</label>
+            <input type="password" id="register-confirm-password" name="confirmPassword" autocomplete="new-password">
+            <span class="field-error" id="register-confirm-password-error"></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an account? <a href="login.html">Login</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        &copy; <span data-current-year></span> ShopEase. Demo application for SQA testing purposes only.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

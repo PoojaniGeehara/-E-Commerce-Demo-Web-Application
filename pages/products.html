@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Products - ShopEase</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/products.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body data-page="products">
+
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-logo"><span class="logo-mark">SE</span>ShopEase</a>
+      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar-links">
+        <a href="../index.html" data-page="home">Home</a>
+        <a href="products.html" data-page="products">Products</a>
+        <a href="../index.html#categories" data-page="categories">Categories</a>
+        <a href="cart.html" data-page="cart" data-cart-count>Cart (0)</a>
+        <a href="login.html" data-nav="guest-only" data-page="login" class="btn btn-secondary">Login</a>
+        <a href="profile.html" data-nav="auth-only" data-page="profile" style="display:none;">Profile</a>
+        <a href="#" data-nav="auth-only" data-action="logout" style="display:none;">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="container">
+        <h1>All Products</h1>
+        <p class="text-muted">Browse ShopEase's full catalog.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="products-toolbar">
+        <div class="search-box">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="search-input" placeholder="Search products...">
+        </div>
+
+        <select id="category-filter" class="filter-select">
+          <option value="all">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Home">Home</option>
+        </select>
+
+        <select id="price-filter" class="filter-select">
+          <option value="all">Any Price</option>
+          <option value="0-2000">Under Rs. 2,000</option>
+          <option value="2000-5000">Rs. 2,000 - 5,000</option>
+          <option value="5000-10000">Rs. 5,000 - 10,000</option>
+          <option value="10000-0">Above Rs. 10,000</option>
+        </select>
+
+        <select id="sort-select" class="filter-select">
+          <option value="default">Sort By</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating-desc">Rating: High to Low</option>
+          <option value="name-asc">Name: A-Z</option>
+        </select>
+      </div>
+
+      <div class="products-meta">
+        <span id="product-count">20 products found</span>
+      </div>
+
+      <div class="product-grid" id="product-grid"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        &copy; <span data-current-year></span> ShopEase. Demo application for SQA testing purposes only.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>
