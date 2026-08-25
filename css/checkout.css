@@ -1,0 +1,124 @@
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 32px;
+  padding: 32px 0 64px;
+  align-items: start;
+}
+
+.checkout-form-section {
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.checkout-form-section h2 {
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-form-section h2 .step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-fields {
+  display: none;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--color-border);
+}
+
+.card-fields.show {
+  display: block;
+}
+
+.order-summary-box {
+  padding: 24px;
+  position: sticky;
+  top: 90px;
+}
+
+.order-summary-box h2 {
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+}
+
+.order-line-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: var(--color-text-muted);
+}
+
+.order-line-item span:first-child {
+  color: var(--color-text);
+}
+
+/* ---------- Order Success ---------- */
+.order-success-wrapper {
+  max-width: 560px;
+  margin: 56px auto;
+  padding: 48px 40px;
+  text-align: center;
+}
+
+.order-success-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.order-success-wrapper h1 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.order-success-wrapper > p.text-muted {
+  margin-bottom: 28px;
+}
+
+.order-details-list {
+  text-align: left;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.order-details-list .detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.92rem;
+}
+
+.order-details-list .detail-row:last-child {
+  border-bottom: none;
+}
+
+.order-details-list .detail-row span:first-child {
+  color: var(--color-text-muted);
+}
+
+.order-details-list .detail-row span:last-child {
+  font-weight: 600;
+}

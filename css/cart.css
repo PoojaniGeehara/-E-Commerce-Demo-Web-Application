@@ -1,0 +1,128 @@
+.cart-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  padding: 32px 0 64px;
+  align-items: start;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 88px 1fr auto auto auto;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+}
+
+.cart-item-image {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-item-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cart-item-price {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+}
+
+.cart-item-qty .qty-selector {
+  margin-bottom: 0;
+}
+
+.cart-item-subtotal {
+  font-weight: 700;
+  min-width: 100px;
+  text-align: right;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 8px;
+}
+
+.cart-item-remove:hover {
+  text-decoration: underline;
+}
+
+.cart-summary {
+  padding: 24px;
+  position: sticky;
+  top: 90px;
+}
+
+.cart-summary h2 {
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.summary-row.total {
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+  margin-top: 14px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+
+.cart-summary .btn {
+  margin-top: 10px;
+}
+
+.cart-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+}
+
+@media (max-width: 767px) {
+  .cart-item {
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      "image name"
+      "image qty"
+      "image subtotal"
+      "image remove";
+    row-gap: 8px;
+  }
+
+  .cart-item-image { grid-area: image; width: 64px; height: 64px; }
+  .cart-item-info { grid-area: name; }
+  .cart-item-qty { grid-area: qty; }
+  .cart-item-subtotal { grid-area: subtotal; text-align: left; }
+  .cart-item-remove { grid-area: remove; justify-self: start; padding-left: 0; }
+}
