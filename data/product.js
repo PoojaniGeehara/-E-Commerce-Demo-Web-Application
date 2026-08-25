@@ -19,7 +19,7 @@ const PRODUCTS = [
     discount: 0,
     rating: 4.2,
     stock: 40,
-    image: "../images/products/phone-stand.jpg"
+    image: "../images/products/phone-stand.webp"
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const PRODUCTS = [
     discount: 20,
     rating: 4.4,
     stock: 12,
-    image: "../images/products/smartwatch.jpg"
+    image: "../images/products/smartwatch.webp"
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const PRODUCTS = [
     discount: 17,
     rating: 4.1,
     stock: 30,
-    image: "../images/products/charger.jpg"
+    image: "../images/products/charger.webp"
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ const PRODUCTS = [
     discount: 0,
     rating: 4.0,
     stock: 60,
-    image: "../images/products/tshirt.jpg"
+    image: "../images/products/tshirt.avif"
   },
   {
     id: 7,
@@ -85,7 +85,7 @@ const PRODUCTS = [
     discount: 5,
     rating: 4.2,
     stock: 20,
-    image: "../images/products/kids-hoodie.jpg"
+    image: "../images/products/kids-hoodie.webp"
   },
   {
     id: 9,
@@ -206,7 +206,7 @@ const PRODUCTS = [
     discount: 0,
     rating: 4.1,
     stock: 33,
-    image: "../images/products/lamp.jpg"
+    image: "../images/products/lamp.avif"
   },
   {
     id: 20,
