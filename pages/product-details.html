@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart - ShopEase</title>
+  <title>Product Details - ShopEase</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/navbar.css">
   <link rel="stylesheet" href="../css/products.css">
-  <link rel="stylesheet" href="../css/cart.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
-<body data-page="cart">
+<body data-page="products">
 
   <header class="navbar">
     <div class="navbar-inner">
@@ -31,32 +30,10 @@
   </header>
 
   <main>
-    <div class="page-header">
-      <div class="container">
-        <h1>Your Cart</h1>
-        <p class="text-muted">Review your items before checking out.</p>
-      </div>
-    </div>
-
     <div class="container">
-      <div id="cart-empty-state" class="empty-state" style="display:none;">
-        <div class="empty-icon">&#128722;</div>
-        <p>Your cart is empty.</p>
-        <a href="products.html" class="btn btn-primary">Continue Shopping</a>
-      </div>
-
-      <div class="cart-layout">
-        <div class="cart-items" id="cart-items-list"></div>
-
-        <div class="cart-summary card" id="cart-summary">
-          <h2>Order Summary</h2>
-          <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">Rs. 0.00</span></div>
-          <div class="summary-row"><span>Discount</span><span id="summary-discount">- Rs. 0.00</span></div>
-          <div class="summary-row"><span>Delivery Fee</span><span id="summary-delivery">Rs. 0.00</span></div>
-          <div class="summary-row total"><span>Total</span><span id="summary-total">Rs. 0.00</span></div>
-          <a href="checkout.html" class="btn btn-primary btn-block">Proceed to Checkout</a>
-          <a href="products.html" class="btn btn-outline btn-block">Continue Shopping</a>
-        </div>
+      <a href="products.html" class="back-link" style="margin-top:24px;">&larr; Back to Products</a>
+      <div class="product-details" id="product-details-container">
+        <!-- Populated by js/products.js -->
       </div>
     </div>
   </main>
@@ -72,5 +49,6 @@
   <script src="../data/products.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
 </body>
 </html>

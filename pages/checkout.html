@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - ShopEase</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/checkout.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body data-page="cart">
+
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-logo"><span class="logo-mark">SE</span>ShopEase</a>
+      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navbar-links">
+        <a href="../index.html" data-page="home">Home</a>
+        <a href="products.html" data-page="products">Products</a>
+        <a href="../index.html#categories" data-page="categories">Categories</a>
+        <a href="cart.html" data-page="cart" data-cart-count>Cart (0)</a>
+        <a href="login.html" data-nav="guest-only" data-page="login" class="btn btn-secondary">Login</a>
+        <a href="profile.html" data-nav="auth-only" data-page="profile" style="display:none;">Profile</a>
+        <a href="#" data-nav="auth-only" data-action="logout" style="display:none;">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="container">
+        <h1>Checkout</h1>
+        <p class="text-muted">Complete your order below.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="checkout-empty-state" class="empty-state" style="display:none;">
+        <div class="empty-icon">&#128722;</div>
+        <p>Your cart is empty.</p>
+        <a href="products.html" class="btn btn-primary">Continue Shopping</a>
+      </div>
+
+      <form id="checkout-form" novalidate>
+        <div class="checkout-layout" id="checkout-content">
+          <div class="checkout-form-fields">
+
+            <section class="checkout-form-section card">
+              <h2><span class="step-num">1</span> Customer Information</h2>
+              <div class="form-group">
+                <label for="checkout-name">Full Name</label>
+                <input type="text" id="checkout-name" name="fullName">
+                <span class="field-error" id="checkout-name-error"></span>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="checkout-email">Email</label>
+                  <input type="email" id="checkout-email" name="email">
+                  <span class="field-error" id="checkout-email-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-phone">Phone Number</label>
+                  <input type="tel" id="checkout-phone" name="phone" placeholder="0771234567">
+                  <span class="field-error" id="checkout-phone-error"></span>
+                </div>
+              </div>
+            </section>
+
+            <section class="checkout-form-section card">
+              <h2><span class="step-num">2</span> Delivery Address</h2>
+              <div class="form-group">
+                <label for="checkout-address">Address</label>
+                <input type="text" id="checkout-address" name="address">
+                <span class="field-error" id="checkout-address-error"></span>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="checkout-city">City</label>
+                  <input type="text" id="checkout-city" name="city">
+                  <span class="field-error" id="checkout-city-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-postal">Postal Code</label>
+                  <input type="text" id="checkout-postal" name="postalCode" placeholder="10230">
+                  <span class="field-error" id="checkout-postal-error"></span>
+                </div>
+              </div>
+            </section>
+
+            <section class="checkout-form-section card">
+              <h2><span class="step-num">3</span> Payment Method</h2>
+              <div class="radio-group" role="radiogroup" aria-label="Payment Method">
+                <label class="radio-option">
+                  <input type="radio" name="payment-method" value="cod">
+                  Cash on Delivery
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="payment-method" value="card">
+                  Credit/Debit Card
+                </label>
+              </div>
+              <span class="field-error" id="payment-error" style="margin-top:8px;">Please select a payment method.</span>
+
+              <div class="card-fields" id="card-fields">
+                <div class="form-group">
+                  <label for="card-number">Card Number</label>
+                  <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456">
+                  <span class="field-error" id="card-number-error"></span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="card-expiry">Expiry Date</label>
+                    <input type="text" id="card-expiry" name="expiry" placeholder="MM/YY">
+                    <span class="field-error" id="card-expiry-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" name="cvv" placeholder="123">
+                    <span class="field-error" id="card-cvv-error"></span>
+                  </div>
+                </div>
+                <p class="text-muted" style="font-size:0.8rem;">Demo fields only. No real card information is processed or stored.</p>
+              </div>
+            </section>
+
+          </div>
+
+          <div class="order-summary-box card">
+            <h2>Order Summary</h2>
+            <div id="order-summary-items"></div>
+            <div class="summary-row"><span>Subtotal</span><span id="checkout-subtotal">Rs. 0.00</span></div>
+            <div class="summary-row"><span>Discount</span><span id="checkout-discount">- Rs. 0.00</span></div>
+            <div class="summary-row"><span>Delivery Fee</span><span id="checkout-delivery">Rs. 0.00</span></div>
+            <div class="summary-row total"><span>Total</span><span id="checkout-total">Rs. 0.00</span></div>
+            <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom">
+        &copy; <span data-current-year></span> ShopEase. Demo application for SQA testing purposes only.
+      </div>
+    </div>
+  </footer>
+
+  <script src="../data/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/checkout.js"></script>
+</body>
+</html>
