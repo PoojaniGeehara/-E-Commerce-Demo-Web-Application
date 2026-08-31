@@ -7,6 +7,15 @@ function showAlert(alertEl, message, type) {
   alertEl.className = "alert show " + (type === "success" ? "alert-success" : "alert-error");
 }
 
+function getRegisteredUsers() {
+  const raw = localStorage.getItem("registered_users");
+  return raw ? JSON.parse(raw) : [];
+}
+
+function saveRegisteredUsers(users) {
+  localStorage.setItem("registered_users", JSON.stringify(users));
+}
+
 /* ---------------------------------------------------------
    LOGIN
    --------------------------------------------------------- */
@@ -19,9 +28,13 @@ function initLoginForm() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
-    const remember = document.getElementById("login-remember").checked;
+    const emailInput = document.getElementById("login-email");
+    const passwordInput = document.getElementById("login-password");
+    const rememberInput = document.getElementById("login-remember");
+
+    const email = emailInput ? emailInput.value.trim() : "";
+    const password = passwordInput ? passwordInput.value : "";
+    const remember = rememberInput ? rememberInput.checked : false;
 
     clearAllFieldErrors(["login-email", "login-password"]);
     if (alertEl) alertEl.className = "alert";
@@ -43,9 +56,13 @@ function initLoginForm() {
 
     if (!valid) return;
 
-    if (email.trim().toLowerCase() === DEMO_EMAIL && password === DEMO_PASSWORD) {
+    const normalizedEmail = email.toLowerCase();
+    const registeredUsers = getRegisteredUsers();
+    const matchedUser = registeredUsers.find(u => (u.email || "").toLowerCase() === normalizedEmail && u.password === password);
+
+    if (normalizedEmail === DEMO_EMAIL.toLowerCase() && password === DEMO_PASSWORD) {
       const existingUser = getCurrentUser();
-      const user = existingUser || {
+      const user = existingUser && existingUser.email === DEMO_EMAIL ? existingUser : {
         fullName: "Demo User",
         email: DEMO_EMAIL,
         phone: "0771234567",
@@ -59,10 +76,29 @@ function initLoginForm() {
         localStorage.setItem("rememberMe", "true");
       }
 
-      showAlert(alertEl, "Login successful.", "success");
+      showAlert(alertEl, "Login successful. Redirecting...", "success");
       setTimeout(() => {
-        window.location.href = "../index.html";
-      }, 900);
+        window.location.href = resolvePageLink("index.html");
+      }, 700);
+    } else if (matchedUser) {
+      const sessionUser = {
+        fullName: matchedUser.fullName,
+        email: matchedUser.email,
+        phone: matchedUser.phone || "",
+        address: matchedUser.address || "",
+        city: matchedUser.city || "",
+        postalCode: matchedUser.postalCode || ""
+      };
+      localStorage.setItem("user", JSON.stringify(sessionUser));
+      localStorage.setItem("isLoggedIn", "true");
+      if (remember) {
+        localStorage.setItem("rememberMe", "true");
+      }
+
+      showAlert(alertEl, "Login successful. Welcome back!", "success");
+      setTimeout(() => {
+        window.location.href = resolvePageLink("index.html");
+      }, 700);
     } else {
       showAlert(alertEl, "Invalid email or password.", "error");
     }
@@ -135,22 +171,33 @@ function initRegisterForm() {
 
     if (!valid) return;
 
-    /* Demo only: never store real passwords. */
-    const user = {
+    const normalizedEmail = email.trim().toLowerCase();
+    const registeredUsers = getRegisteredUsers();
+
+    if (normalizedEmail === DEMO_EMAIL.toLowerCase() || registeredUsers.some(u => (u.email || "").toLowerCase() === normalizedEmail)) {
+      showAlert(alertEl, "An account with this email address already exists.", "error");
+      showFieldError("register-email", "Email already in use.");
+      return;
+    }
+
+    const newUser = {
       fullName: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
+      password: password,
       address: "",
       city: "",
       postalCode: ""
     };
-    localStorage.setItem("user", JSON.stringify(user));
 
-    showAlert(alertEl, "Registration successful.", "success");
+    registeredUsers.push(newUser);
+    saveRegisteredUsers(registeredUsers);
+
+    showAlert(alertEl, "Registration successful! You can now log in.", "success");
     form.reset();
     setTimeout(() => {
-      window.location.href = "login.html";
-    }, 1200);
+      window.location.href = resolvePageLink("login.html");
+    }, 1000);
   });
 }
 
@@ -160,10 +207,7 @@ function initRegisterForm() {
 function logoutUser() {
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("user");
-  /* Note: session-related demo values are cleared above. */
-  window.location.href = window.location.pathname.includes("/pages/")
-    ? "login.html"
-    : "pages/login.html";
+  window.location.href = resolvePageLink("login.html");
 }
 
 document.addEventListener("DOMContentLoaded", () => {

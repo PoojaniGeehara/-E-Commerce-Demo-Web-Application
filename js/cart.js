@@ -46,12 +46,13 @@ function setCartQuantity(productId, quantity) {
   if (!item) return;
 
   const product = getProductById(productId);
-  let newQty = quantity;
+  if (!product) return;
 
+  let newQty = quantity;
   if (newQty < 1) newQty = 1;
 
-  /* Enforce the stock ceiling for every product in the cart. */
-  if (productId !== 3 && newQty > product.stock) {
+  /* Enforce the stock ceiling for all products in the cart. */
+  if (newQty > product.stock) {
     newQty = product.stock;
   }
 
@@ -135,11 +136,12 @@ function renderCartPage() {
     if (!product) return "";
     const finalPrice = getDiscountedPrice(product.price, product.discount);
     const lineSubtotal = finalPrice * item.quantity;
+    const imageSrc = resolveAssetPath(product.image);
 
     return `
       <div class="cart-item card" data-product-id="${product.id}">
         <div class="cart-item-image">
-          <img src="${product.image}" alt="${product.name}" onerror="this.parentElement.textContent='\u{1F6CD}'">
+          <img src="${imageSrc}" alt="${product.name}" onerror="this.parentElement.textContent='\u{1F6CD}'">
         </div>
         <div class="cart-item-info">
           <div class="cart-item-name">${product.name}</div>
@@ -159,10 +161,15 @@ function renderCartPage() {
   }).join("");
 
   const totals = calculateCartTotals(cart);
-  document.getElementById("summary-subtotal").textContent = formatCurrency(totals.subtotal);
-  document.getElementById("summary-discount").textContent = "- " + formatCurrency(totals.discount);
-  document.getElementById("summary-delivery").textContent = totals.delivery === 0 ? "Free" : formatCurrency(totals.delivery);
-  document.getElementById("summary-total").textContent = formatCurrency(totals.total);
+  const subtotalEl = document.getElementById("summary-subtotal");
+  const discountEl = document.getElementById("summary-discount");
+  const deliveryEl = document.getElementById("summary-delivery");
+  const totalEl = document.getElementById("summary-total");
+
+  if (subtotalEl) subtotalEl.textContent = formatCurrency(totals.subtotal);
+  if (discountEl) discountEl.textContent = "- " + formatCurrency(totals.discount);
+  if (deliveryEl) deliveryEl.textContent = totals.delivery === 0 ? "Free" : formatCurrency(totals.delivery);
+  if (totalEl) totalEl.textContent = formatCurrency(totals.total);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

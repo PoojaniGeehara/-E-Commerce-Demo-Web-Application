@@ -1,0 +1,222 @@
+const PRODUCTS = [
+  {
+    id: 1,
+    name: "Wireless Headphones",
+    description: "Over-ear wireless headphones with rich bass, 20-hour battery life and a padded headband for all-day comfort.",
+    category: "Electronics",
+    price: 5999,
+    discount: 10,
+    rating: 4.5,
+    stock: 25,
+    image: "../images/products/headphones.jpg"
+  },
+  {
+    id: 2,
+    name: "Smartphone Stand",
+    description: "Adjustable aluminium desk stand compatible with most phones and small tablets.",
+    category: "Electronics",
+    price: 1299,
+    discount: 0,
+    rating: 4.2,
+    stock: 40,
+    image: "../images/products/phone-stand.webp"
+  },
+  {
+    id: 3,
+    name: "Bluetooth Speaker",
+    description: "Portable speaker with punchy sound, splash resistance and 10 hours of playback.",
+    category: "Electronics",
+    price: 4500,
+    discount: 15,
+    rating: 4.6,
+    stock: 18,
+    image: "../images/products/speaker.jpg"
+  },
+  {
+    id: 4,
+    name: "Smart Watch",
+    description: "Fitness-focused smart watch with heart-rate tracking, notifications and a week-long battery.",
+    category: "Electronics",
+    price: 12999,
+    discount: 20,
+    rating: 4.4,
+    stock: 12,
+    image: "../images/products/smartwatch.webp"
+  },
+  {
+    id: 5,
+    name: "USB-C Fast Charger",
+    description: "30W fast charger with USB-C output, compatible with most modern phones and tablets.",
+    category: "Electronics",
+    price: 1750,
+    discount: 17,
+    rating: 4.1,
+    stock: 30,
+    image: "../images/products/charger.webp"
+  },
+  {
+    id: 6,
+    name: "Men's Cotton T-Shirt",
+    description: "Breathable 100% cotton crew-neck t-shirt, available in classic everyday colours.",
+    category: "Clothing",
+    price: 1499,
+    discount: 0,
+    rating: 4.0,
+    stock: 60,
+    image: "../images/products/tshirt.avif"
+  },
+  {
+    id: 7,
+    name: "Women's Denim Jacket",
+    description: "Classic fit denim jacket with button closure and chest pockets.",
+    category: "Clothing",
+    price: 6500,
+    discount: 10,
+    rating: 4.3,
+    stock: 15,
+    image: "../images/products/denim-jacket.jpg"
+  },
+  {
+    id: 8,
+    name: "Kids Hoodie",
+    description: "Soft fleece-lined hoodie with kangaroo pocket, sized for ages 5-12.",
+    category: "Clothing",
+    price: 2999,
+    discount: 5,
+    rating: 4.2,
+    stock: 20,
+    image: "../images/products/kids-hoodie.webp"
+  },
+  {
+    id: 9,
+    name: "Formal Shirt",
+    description: "Slim-fit formal shirt in wrinkle-resistant fabric, suitable for office wear.",
+    category: "Clothing",
+    price: 3200,
+    discount: 0,
+    rating: 3.9,
+    stock: 35,
+    image: "../images/products/formal-shirt.jpg"
+  },
+  {
+    id: 10,
+    name: "Running Shoes",
+    description: "Lightweight running shoes with cushioned soles and breathable mesh upper.",
+    category: "Shoes",
+    price: 7999,
+    discount: 12,
+    rating: 4.5,
+    stock: 22,
+    image: "../images/products/running-shoes.jpg"
+  },
+  {
+    id: 11,
+    name: "Leather Sandals",
+    description: "Genuine leather sandals with adjustable straps, perfect for casual outings.",
+    category: "Shoes",
+    price: 3499,
+    discount: 0,
+    rating: 4.1,
+    stock: 0,
+    image: "../images/products/sandals.jpg"
+  },
+  {
+    id: 12,
+    name: "Sports Sneakers",
+    description: "All-purpose sneakers with shock-absorbing soles, built for daily training.",
+    category: "Shoes",
+    price: 8999,
+    discount: 25,
+    rating: 4.6,
+    stock: 10,
+    image: "../images/products/sneakers.jpg"
+  },
+  {
+    id: 13,
+    name: "Formal Leather Shoes",
+    description: "Polished leather formal shoes with a cushioned footbed for all-day wear.",
+    category: "Shoes",
+    price: 6999,
+    discount: 8,
+    rating: 4.0,
+    stock: 14,
+    image: "../images/products/formal-shoes.jpg"
+  },
+  {
+    id: 14,
+    name: "Leather Wallet",
+    description: "Slim bi-fold genuine leather wallet with card slots and a coin pocket.",
+    category: "Accessories",
+    price: 2499,
+    discount: 0,
+    rating: 4.3,
+    stock: 45,
+    image: "../images/products/wallet.jpg"
+  },
+  {
+    id: 15,
+    name: "Sunglasses",
+    description: "UV-protective polarised sunglasses with a lightweight polycarbonate frame.",
+    category: "Accessories",
+    price: 1899,
+    discount: 20,
+    rating: 4.2,
+    stock: 28,
+    image: "../images/products/sunglasses.jpg"
+  },
+  {
+    id: 16,
+    name: "Analog Wrist Watch",
+    description: "Stainless steel analog watch with a scratch-resistant mineral glass face.",
+    category: "Accessories",
+    price: 5499,
+    discount: 10,
+    rating: 4.4,
+    stock: 16,
+    image: "../images/products/watch.jpg"
+  },
+  {
+    id: 17,
+    name: "Backpack",
+    description: "Water-resistant everyday backpack with a padded laptop compartment.",
+    category: "Accessories",
+    price: 4299,
+    discount: 0,
+    rating: 4.5,
+    stock: 24,
+    image: "../images/products/backpack.jpg"
+  },
+  {
+    id: 18,
+    name: "Non-Stick Cookware Set",
+    description: "5-piece non-stick cookware set suitable for gas and induction stoves.",
+    category: "Home",
+    price: 8499,
+    discount: 15,
+    rating: 4.3,
+    stock: 9,
+    image: "../images/products/cookware.jpg"
+  },
+  {
+    id: 19,
+    name: "LED Table Lamp",
+    description: "Dimmable LED desk lamp with adjustable arm and USB charging port.",
+    category: "Home",
+    price: 2199,
+    discount: 0,
+    rating: 4.1,
+    stock: 33,
+    image: "../images/products/lamp.avif"
+  },
+  {
+    id: 20,
+    name: "Cotton Bedsheet Set",
+    description: "Queen-size 100% cotton bedsheet set with two pillow covers.",
+    category: "Home",
+    price: 3699,
+    discount: 10,
+    rating: 4.4,
+    stock: 27,
+    image: "../images/products/bedsheet.jpg"
+  }
+];

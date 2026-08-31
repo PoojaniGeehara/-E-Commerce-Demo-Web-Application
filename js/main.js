@@ -7,15 +7,49 @@ function formatCurrency(amount) {
 }
 
 /* ---------------------------------------------------------
+   Path helpers for multi-directory HTML support
+   --------------------------------------------------------- */
+function isSubPage() {
+  const path = (window.location.pathname || "").replace(/\\/g, "/");
+  return path.includes("/pages/") || (document.body && document.body.getAttribute("data-page") !== "home");
+}
+
+function resolveAssetPath(imagePath) {
+  if (!imagePath) return "";
+  const clean = imagePath.replace(/^(\.\.\/|\.\/)+/, "");
+  return isSubPage() ? "../" + clean : clean;
+}
+
+function resolvePageLink(pagePath) {
+  if (!pagePath) return "#";
+  if (pagePath.startsWith("http://") || pagePath.startsWith("https://") || pagePath.startsWith("#")) {
+    return pagePath;
+  }
+  const clean = pagePath.replace(/^(\.\.\/|\.\/)+/, "");
+  if (isSubPage()) {
+    if (clean === "index.html" || clean.startsWith("index.html#")) {
+      return "../" + clean;
+    }
+    return clean.startsWith("pages/") ? clean.substring(6) : clean;
+  } else {
+    if (clean === "index.html" || clean.startsWith("index.html#")) {
+      return clean;
+    }
+    return clean.startsWith("pages/") ? clean : "pages/" + clean;
+  }
+}
+
+/* ---------------------------------------------------------
    Discounted price calculation.
    --------------------------------------------------------- */
 function getDiscountedPrice(price, discount) {
   if (!discount) return price;
   const reduced = price - (price * discount) / 100;
-  return Math.floor(reduced);
+  return Math.round(reduced);
 }
 
 function getProductById(id) {
+  if (typeof PRODUCTS === "undefined") return null;
   return PRODUCTS.find(p => p.id === Number(id));
 }
 

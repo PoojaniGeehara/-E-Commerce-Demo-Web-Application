@@ -13,6 +13,7 @@ function initCheckoutPage() {
   }
 
   if (emptyState) emptyState.style.display = "none";
+  if (checkoutContent) checkoutContent.style.display = "grid";
 
   prefillCustomerInfo();
   renderOrderSummary(cart);
@@ -26,31 +27,45 @@ function prefillCustomerInfo() {
   const nameField = document.getElementById("checkout-name");
   const emailField = document.getElementById("checkout-email");
   const phoneField = document.getElementById("checkout-phone");
+  const addressField = document.getElementById("checkout-address");
+  const cityField = document.getElementById("checkout-city");
+  const postalField = document.getElementById("checkout-postal");
+
   if (nameField && user.fullName) nameField.value = user.fullName;
   if (emailField && user.email) emailField.value = user.email;
   if (phoneField && user.phone) phoneField.value = user.phone;
+  if (addressField && user.address) addressField.value = user.address;
+  if (cityField && user.city) cityField.value = user.city;
+  if (postalField && user.postalCode) postalField.value = user.postalCode;
 }
 
 function renderOrderSummary(cart) {
   const listEl = document.getElementById("order-summary-items");
   const totals = calculateCartTotals(cart);
 
-  listEl.innerHTML = cart.map(item => {
-    const product = getProductById(item.productId);
-    if (!product) return "";
-    const finalPrice = getDiscountedPrice(product.price, product.discount);
-    return `
-      <div class="order-line-item">
-        <span>${product.name} &times; ${item.quantity}</span>
-        <span>${formatCurrency(finalPrice * item.quantity)}</span>
-      </div>
-    `;
-  }).join("");
+  if (listEl) {
+    listEl.innerHTML = cart.map(item => {
+      const product = getProductById(item.productId);
+      if (!product) return "";
+      const finalPrice = getDiscountedPrice(product.price, product.discount);
+      return `
+        <div class="order-line-item">
+          <span>${product.name} &times; ${item.quantity}</span>
+          <span>${formatCurrency(finalPrice * item.quantity)}</span>
+        </div>
+      `;
+    }).join("");
+  }
 
-  document.getElementById("checkout-subtotal").textContent = formatCurrency(totals.subtotal);
-  document.getElementById("checkout-discount").textContent = "- " + formatCurrency(totals.discount);
-  document.getElementById("checkout-delivery").textContent = totals.delivery === 0 ? "Free" : formatCurrency(totals.delivery);
-  document.getElementById("checkout-total").textContent = formatCurrency(totals.total);
+  const subtotalEl = document.getElementById("checkout-subtotal");
+  const discountEl = document.getElementById("checkout-discount");
+  const deliveryEl = document.getElementById("checkout-delivery");
+  const totalEl = document.getElementById("checkout-total");
+
+  if (subtotalEl) subtotalEl.textContent = formatCurrency(totals.subtotal);
+  if (discountEl) discountEl.textContent = "- " + formatCurrency(totals.discount);
+  if (deliveryEl) deliveryEl.textContent = totals.delivery === 0 ? "Free" : formatCurrency(totals.delivery);
+  if (totalEl) totalEl.textContent = formatCurrency(totals.total);
 }
 
 function setupPaymentToggle() {
@@ -60,8 +75,9 @@ function setupPaymentToggle() {
   radios.forEach(radio => {
     radio.addEventListener("change", () => {
       document.querySelectorAll(".radio-option").forEach(opt => opt.classList.remove("selected"));
-      radio.closest(".radio-option").classList.add("selected");
-      cardFields.classList.toggle("show", radio.value === "card");
+      const parentLabel = radio.closest(".radio-option");
+      if (parentLabel) parentLabel.classList.add("selected");
+      if (cardFields) cardFields.classList.toggle("show", radio.value === "card");
     });
   });
 }
@@ -149,7 +165,7 @@ function setupCheckoutValidation(form, cart) {
         showFieldError("card-expiry", "Expiry date is required.");
         valid = false;
       } else if (!validateExpiry(expiry)) {
-        showFieldError("card-expiry", "Enter a valid expiry date (MM/YY).");
+        showFieldError("card-expiry", "Enter a valid future expiry date (MM/YY).");
         valid = false;
       }
 
@@ -157,7 +173,7 @@ function setupCheckoutValidation(form, cart) {
         showFieldError("card-cvv", "CVV is required.");
         valid = false;
       } else if (!validateCVV(cvv)) {
-        showFieldError("card-cvv", "CVV must contain 4 digits.");
+        showFieldError("card-cvv", "CVV must contain 3 or 4 digits.");
         valid = false;
       }
     }
@@ -196,7 +212,7 @@ function placeOrder(customer, cart) {
   localStorage.setItem("order", JSON.stringify(order));
   clearCart();
 
-  window.location.href = "order-success.html";
+  window.location.href = resolvePageLink("order-success.html");
 }
 
 /* ---------------------------------------------------------
@@ -217,14 +233,27 @@ function renderOrderSuccessPage() {
     .filter(Boolean)
     .join(", ");
 
-  document.getElementById("order-number-value").textContent = order.orderNumber;
+  const orderNumEl = document.getElementById("order-number-value");
+  if (orderNumEl) orderNumEl.textContent = order.orderNumber;
+
+  const itemsHtml = (order.items || []).map(item => {
+    const product = getProductById(item.productId);
+    const name = product ? product.name : `Product #${item.productId}`;
+    const price = product ? getDiscountedPrice(product.price, product.discount) : 0;
+    return `<div class="detail-row"><span>${name} &times; ${item.quantity}</span><span>${formatCurrency(price * item.quantity)}</span></div>`;
+  }).join("");
 
   container.innerHTML = `
     <div class="detail-row"><span>Order Number</span><span>${order.orderNumber}</span></div>
-    <div class="detail-row"><span>Total Amount</span><span>${formatCurrency(order.totals.total)}</span></div>
-    <div class="detail-row"><span>Delivery Address</span><span>${addressLine}</span></div>
+    <div class="detail-row"><span>Customer Name</span><span>${order.customer.name || "-"}</span></div>
+    <div class="detail-row"><span>Contact Email</span><span>${order.customer.email || "-"}</span></div>
+    <div class="detail-row"><span>Delivery Address</span><span>${addressLine || "-"}</span></div>
     <div class="detail-row"><span>Estimated Delivery</span><span>${order.estimatedDelivery}</span></div>
     <div class="detail-row"><span>Payment Method</span><span>${order.customer.paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery"}</span></div>
+    ${itemsHtml ? `<div style="margin-top:12px; padding-top:8px; border-top:1px dashed var(--color-border); font-weight:600; color:var(--color-text); text-align:left;">Items Ordered:</div>${itemsHtml}` : ""}
+    <div class="detail-row" style="margin-top:8px; font-weight:700; font-size:1rem; border-top:1px solid var(--color-border); padding-top:12px;">
+      <span>Total Paid</span><span>${formatCurrency(order.totals.total)}</span>
+    </div>
   `;
 }
 
