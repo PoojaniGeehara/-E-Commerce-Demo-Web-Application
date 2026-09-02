@@ -80,7 +80,7 @@ This test plan defines the testing strategy, test coverage, scenarios, test case
 
 | Defect ID | Severity | Description | Status |
 |---|---|---|---|
-| DEF-001 | Critical | Script filenames `data/product.js` and `js/product.js` caused 404 errors across all HTML pages referencing plural names. | **Fixed** (files synced and path resolution added) |
+| DEF-001 | Critical | Script filenames `data/product.js` and `js/product.js` caused 404 errors across HTML pages referencing plural names. | **Fixed** (standardized on `data/products.js` and `js/products.js`, removed redundant singular files) |
 | DEF-002 | Critical | Product links and image paths from `index.html` were broken due to hardcoded relative paths. | **Fixed** (added dynamic `resolveAssetPath` and `resolvePageLink`) |
 | DEF-003 | High | Product ID 3 was exempted from cart stock limits in `js/cart.js`. | **Fixed** (stock ceiling enforced for all products) |
 | DEF-004 | High | Registration did not store passwords or integrate with login, preventing newly registered users from logging in. | **Fixed** (integrated `registered_users` storage and multi-user authentication) |

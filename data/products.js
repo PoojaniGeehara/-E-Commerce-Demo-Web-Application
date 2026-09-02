@@ -117,7 +117,7 @@ const PRODUCTS = [
     price: 3499,
     discount: 0,
     rating: 4.1,
-    stock: 0,
+    stock: 2,
     image: "../images/products/sandals.jpg"
   },
   {
