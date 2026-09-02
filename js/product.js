@@ -62,12 +62,42 @@ function renderCategoryGrid() {
   if (!container) return;
 
   container.innerHTML = CATEGORIES.map(cat => `
-    <div class="category-card card">
+    <div class="category-card card" data-category="${cat}" onclick="window.location.href='${resolvePageLink("products.html?category=" + encodeURIComponent(cat))}'">
       <div class="category-icon">${CATEGORY_ICONS[cat]}</div>
       <h3>${cat}</h3>
-      <a href="${resolvePageLink("products.html?category=" + encodeURIComponent(cat))}" class="btn btn-outline btn-sm">View Products</a>
+      <a href="${resolvePageLink("products.html?category=" + encodeURIComponent(cat))}" class="btn btn-outline btn-sm" onclick="event.stopPropagation();">View Products</a>
     </div>
   `).join("");
+}
+
+/* ---------------------------------------------------------
+   Category Tabs Component
+   --------------------------------------------------------- */
+function renderCategoryTabs(activeCategory, onTabClick) {
+  const tabsContainer = document.getElementById("category-tabs");
+  if (!tabsContainer) return;
+
+  const tabs = [
+    { key: "all", label: "All Products", icon: "🛍️" },
+    ...CATEGORIES.map(cat => ({ key: cat, label: cat, icon: CATEGORY_ICONS[cat] || "🏷️" }))
+  ];
+
+  tabsContainer.innerHTML = tabs.map(tab => {
+    const isActive = (activeCategory === tab.key) || (!activeCategory && tab.key === "all");
+    return `
+      <button type="button" class="category-tab-btn ${isActive ? "active" : ""}" data-category="${tab.key}">
+        <span class="tab-icon">${tab.icon}</span>
+        <span>${tab.label}</span>
+      </button>
+    `;
+  }).join("");
+
+  tabsContainer.querySelectorAll(".category-tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const cat = btn.getAttribute("data-category");
+      if (onTabClick) onTabClick(cat);
+    });
+  });
 }
 
 /* ---------------------------------------------------------
@@ -84,20 +114,54 @@ function initProductsPage() {
   const countLabel = document.getElementById("product-count");
 
   const params = new URLSearchParams(window.location.search);
-  const initialCategory = params.get("category");
-  if (initialCategory && CATEGORIES.includes(initialCategory)) {
-    categorySelect.value = initialCategory;
-    localStorage.setItem("lastViewedCategory", initialCategory);
+  const initialCategoryParam = params.get("category");
+  let currentCategory = "all";
+
+  if (initialCategoryParam) {
+    const matched = CATEGORIES.find(c => c.toLowerCase() === initialCategoryParam.toLowerCase());
+    if (matched) {
+      currentCategory = matched;
+      if (categorySelect) categorySelect.value = matched;
+      localStorage.setItem("lastViewedCategory", matched);
+    }
   }
+
+  function setCategory(cat, updateUrl) {
+    currentCategory = cat || "all";
+    if (categorySelect) {
+      categorySelect.value = currentCategory;
+    }
+    if (currentCategory !== "all") {
+      localStorage.setItem("lastViewedCategory", currentCategory);
+    }
+    if (updateUrl && window.history && window.history.replaceState) {
+      const url = new URL(window.location);
+      if (currentCategory === "all") {
+        url.searchParams.delete("category");
+      } else {
+        url.searchParams.set("category", currentCategory);
+      }
+      window.history.replaceState(null, "", url.toString());
+    }
+    renderCategoryTabs(currentCategory, (clickedCat) => setCategory(clickedCat, true));
+    applyFilters();
+  }
+
+  renderCategoryTabs(currentCategory, (clickedCat) => setCategory(clickedCat, true));
+
+  if (initialCategoryParam && currentCategory !== "all" && categorySelect) {
+    categorySelect.value = currentCategory;
+  }
+
   const initialSearch = params.get("search");
-  if (initialSearch) {
+  if (initialSearch && searchInput) {
     searchInput.value = initialSearch;
   }
 
   function applyFilters() {
     let results = [...PRODUCTS];
 
-    const query = searchInput.value.trim().toLowerCase();
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
     if (query) {
       /* Case-insensitive search on name, description, and category */
       results = results.filter(p =>
@@ -107,12 +171,12 @@ function initProductsPage() {
       );
     }
 
-    const category = categorySelect.value;
+    const category = categorySelect ? categorySelect.value : currentCategory;
     if (category && category !== "all") {
       results = results.filter(p => p.category === category);
     }
 
-    const priceRange = priceSelect.value;
+    const priceRange = priceSelect ? priceSelect.value : "all";
     if (priceRange && priceRange !== "all") {
       const [min, max] = priceRange.split("-").map(Number);
       results = results.filter(p => {
@@ -122,7 +186,7 @@ function initProductsPage() {
       });
     }
 
-    const sortBy = sortSelect.value;
+    const sortBy = sortSelect ? sortSelect.value : "default";
     if (sortBy === "price-asc") {
       results.sort((a, b) => getDiscountedPrice(a.price, a.discount) - getDiscountedPrice(b.price, b.discount));
     } else if (sortBy === "price-desc") {
@@ -152,15 +216,14 @@ function initProductsPage() {
     grid.innerHTML = results.map(renderProductCard).join("");
   }
 
-  searchInput.addEventListener("input", applyFilters);
-  categorySelect.addEventListener("change", () => {
-    if (categorySelect.value !== "all") {
-      localStorage.setItem("lastViewedCategory", categorySelect.value);
-    }
-    applyFilters();
-  });
-  priceSelect.addEventListener("change", applyFilters);
-  sortSelect.addEventListener("change", applyFilters);
+  if (searchInput) searchInput.addEventListener("input", applyFilters);
+  if (categorySelect) {
+    categorySelect.addEventListener("change", () => {
+      setCategory(categorySelect.value, true);
+    });
+  }
+  if (priceSelect) priceSelect.addEventListener("change", applyFilters);
+  if (sortSelect) sortSelect.addEventListener("change", applyFilters);
 
   applyFilters();
 }

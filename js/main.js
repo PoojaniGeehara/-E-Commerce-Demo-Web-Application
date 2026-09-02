@@ -94,14 +94,95 @@ function updateCartBadge() {
   badge.textContent = "Cart (" + count + ")";
 }
 
-function highlightActiveNavLink() {
+function updateNavActive(pageName) {
   const links = document.querySelectorAll(".navbar-links a[data-page]");
-  const current = document.body.getAttribute("data-page");
   links.forEach(link => {
-    if (link.getAttribute("data-page") === current) {
+    if (link.getAttribute("data-page") === pageName) {
       link.classList.add("active");
+    } else {
+      link.classList.remove("active");
     }
   });
+}
+
+function highlightActiveNavLink() {
+  if (window.location.hash === "#categories" || window.location.hash === "#/categories") {
+    updateNavActive("categories");
+    return;
+  }
+  const current = document.body ? document.body.getAttribute("data-page") : "";
+  updateNavActive(current);
+}
+
+function setupCategoryNav() {
+  const isHome = document.body && document.body.getAttribute("data-page") === "home";
+
+  function scrollToCategories(smooth) {
+    const target = document.getElementById("categories");
+    if (!target) return false;
+    const navbar = document.querySelector(".navbar");
+    const navHeight = navbar ? navbar.offsetHeight : 70;
+    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = Math.max(0, elementPosition - navHeight - 16);
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: smooth ? "smooth" : "auto"
+    });
+    return true;
+  }
+
+  // Intercept category link clicks
+  const categoryLinks = document.querySelectorAll("a[data-page='categories'], a[href*='#categories']");
+  categoryLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      if (isHome) {
+        e.preventDefault();
+        scrollToCategories(true);
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, "", "#categories");
+        } else {
+          window.location.hash = "categories";
+        }
+        updateNavActive("categories");
+      }
+    });
+  });
+
+  // Handle direct hash navigation when page loads
+  if (isHome && (window.location.hash === "#categories" || window.location.hash === "#/categories")) {
+    const doScroll = () => {
+      scrollToCategories(true);
+      updateNavActive("categories");
+    };
+    setTimeout(doScroll, 120);
+    window.addEventListener("load", () => setTimeout(doScroll, 200), { once: true });
+  }
+
+  // Scroll spy to highlight Categories when scrolled into view on Home
+  if (isHome) {
+    let scrollTimeout;
+    const onScroll = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const categoriesSection = document.getElementById("categories");
+        if (!categoriesSection) return;
+
+        const navbar = document.querySelector(".navbar");
+        const navHeight = navbar ? navbar.offsetHeight : 70;
+        const rect = categoriesSection.getBoundingClientRect();
+
+        // Check if categories section is in viewport
+        if (rect.top <= navHeight + 80 && rect.bottom >= navHeight + 100) {
+          updateNavActive("categories");
+        } else if (window.scrollY < 200) {
+          updateNavActive("home");
+        }
+      }, 50);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 }
 
 function setupMobileMenu() {
@@ -136,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderNavbarAuthState();
   updateCartBadge();
   highlightActiveNavLink();
+  setupCategoryNav();
   setupMobileMenu();
   setupLogoutButtons();
 

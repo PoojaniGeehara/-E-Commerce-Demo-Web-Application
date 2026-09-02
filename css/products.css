@@ -8,13 +8,62 @@
   margin-bottom: 6px;
 }
 
+/* ---------- Category Tabs ---------- */
+.category-tabs-container {
+  padding-top: 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.category-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.category-tab-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.category-tab-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(30, 90, 140, 0.25);
+}
+
+.category-tab-btn .tab-icon {
+  font-size: 1.1rem;
+}
+
 /* ---------- Toolbar ---------- */
 .products-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   align-items: center;
-  padding: 24px 0;
+  padding: 20px 0 24px;
 }
 
 .search-box {

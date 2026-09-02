@@ -1,4 +1,4 @@
-﻿# ShopEase - QA Test Plan & Test Suite Documentation
+# ShopEase - QA Test Plan & Test Suite Documentation
 
 ## 1. Overview
 This test plan defines the testing strategy, test coverage, scenarios, test cases, and bug tracking for the **ShopEase Demo E-Commerce Web Application**.
@@ -41,6 +41,7 @@ This test plan defines the testing strategy, test coverage, scenarios, test case
 | TC-CAT-05 | Product Sorting | 1. Select 'Price: Low to High', 'Rating: High to Low', etc. | Products sorted correctly by final price / rating. | Medium |
 | TC-CAT-06 | Product Details Page | 1. Click 'View Details' on any product. | Product details page renders full description, price, stock status, and quantity selector. | High |
 | TC-CAT-07 | Out of Stock product | 1. Open an out-of-stock product (e.g. Leather Sandals). | 'Out of Stock' badge shown; 'Add to Cart' button is disabled. | High |
+| TC-CAT-08 | Categories Tab & Navigation | 1. Click 'Categories' in navbar from Home or any subpage.<br>2. Click category tab pills on Products page. | Smoothly scrolls to Categories section on Home with sticky navbar offset; filters product catalog by selected tab pill. | High |
 
 ---
 
@@ -86,3 +87,4 @@ This test plan defines the testing strategy, test coverage, scenarios, test case
 | DEF-005 | Medium | Product search was case-sensitive and failed for lowercase queries. | **Fixed** (case-insensitive search across name, description, category) |
 | DEF-006 | Medium | CVV validator and error messages were inconsistent (3 digits vs 'must contain 4 digits'). | **Fixed** (supports 3 or 4 digits with matching validation) |
 | DEF-007 | Medium | Card expiry validation did not check for expired dates. | **Fixed** (validates future MM/YY format) |
+| DEF-008 | High | Categories tab in navbar failed to scroll on repeat clicks or when sticky navbar overlapped section, and Products page lacked interactive category tabs. | **Fixed** (implemented smooth category navigation, scroll offset, dynamic scroll spy, and interactive category tabs) |

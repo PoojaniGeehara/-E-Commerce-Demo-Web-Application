@@ -39,6 +39,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -256,6 +257,10 @@ main {
 }
 
 /* ---------- Categories ---------- */
+#categories {
+  scroll-margin-top: 80px;
+}
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -265,6 +270,7 @@ main {
 .category-card {
   padding: 28px 16px;
   text-align: center;
+  cursor: pointer;
   transition: transform var(--transition), box-shadow var(--transition);
 }
 
