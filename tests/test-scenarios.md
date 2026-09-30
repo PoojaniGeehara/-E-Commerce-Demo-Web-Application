@@ -1,4 +1,5 @@
 # ShopEase – Test Scenarios
+
 ## Authentication
 TS-001 – Verify user login functionality.
 TS-002 – Verify login validation.
