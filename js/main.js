@@ -65,6 +65,12 @@ function getCurrentUser() {
   return raw ? JSON.parse(raw) : null;
 }
 
+function logoutUser() {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("user");
+  window.location.href = resolvePageLink("login.html");
+}
+
 function getCartCount() {
   const raw = localStorage.getItem("cart");
   const cart = raw ? JSON.parse(raw) : [];
@@ -205,11 +211,12 @@ function setupMobileMenu() {
 }
 
 function setupLogoutButtons() {
-  document.querySelectorAll("[data-action='logout']").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-action='logout']");
+    if (btn) {
       e.preventDefault();
       logoutUser();
-    });
+    }
   });
 }
 
