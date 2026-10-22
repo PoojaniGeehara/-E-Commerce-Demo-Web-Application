@@ -40,8 +40,16 @@ ecommerce-qa-demo/
 ├── data/
 │   └── products.js
 ├── images/
-├── tests/
-│   └── README.md
+├── tests/   
+│   ├── README.md
+│   ├──test-plan.md
+│   ├── test-scenarios.md
+│   ├── test-cases.xlsx
+│   ├── test-execution.xlsx
+│   ├── bug-reports.xlsx
+│   ├── test-summary-report.md
+│   └── screenshots/
+
 └── README.md
 ```
 
