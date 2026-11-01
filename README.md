@@ -91,7 +91,6 @@ See `tests/README.md` for suggested test case coverage and QA workflow.
 
 - Manual Testing
 - Excel
-- SQL
 
 ## Project Purpose
 
