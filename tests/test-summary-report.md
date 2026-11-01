@@ -4,9 +4,8 @@
 
 - **Total Test Cases:** 50
 - **Passed:** 50
-- **Failed:** 0 confirmed
-- **Blocked:** 0 confirmed
-- **Not Run / Pending Confirmation:** 0
+- **Failed:** 0 
+- **Blocked:** 0 
 
 ## 2. Modules Tested
 
